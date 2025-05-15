@@ -13,20 +13,25 @@ The additiona non-functional checks will be added also.
 
 3. **Decrement Functionality**  
    - Clicking the decrement button decreases the counter by 1.  
-   - The counter should never display a negative number.  
    - Decrementing at `0` should keep the counter at `0`.
+   - Multiple decrements update the counter correctly.
 
 4. **Edge Cases**  
    - Rapid clicks on both increment and decrement buttons.  
    - Very high counter values (stress testing).  
    - Multiple increment and decrement operations in sequence.
+   - Reload function will reset the counter.
 
+## Non-Functional Tests
 
 
 - **Accessibility Tests**  
-  - Ensure buttons are keyboard navigable.  
-  - Verify compatibility with screen readers.
+  - a11y violations checks on load
+  - Ensure buttons are keyboard focused.  
+  - Check if buttons have accessible names
+  - Check buttons have visible text or aria-label
 
 - **Performance Tests**  
-  - Verify immediate response to clicks, even under rapid clicking.
+  - Verify immediate response to clicks
+  - Verify rapid clicking.
 
