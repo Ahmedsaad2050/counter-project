@@ -1,0 +1,8 @@
+{
+    "name": "mini-project",
+    "version": "1.0.0",
+    "devDependencies": {
+        "cypress": "^14.3.3",
+        "http-server": "^14.1.1"
+    }
+}
