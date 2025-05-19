@@ -23,7 +23,12 @@ export default defineConfig({
         }
         return launchOptions;
       });
-
+      on('task', {
+              log(message) {
+                console.log(message)
+                return null
+              },
+            })                
       on('before:run', () => {
         if (fs.existsSync('cypress/reports')) {                          // Check if the directory exists
           fs.rmSync('cypress/reports', { recursive: true, force: true }) // Remove existing reports
