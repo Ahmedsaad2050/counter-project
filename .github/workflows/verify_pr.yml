@@ -1,28 +1,81 @@
 name: E2E Tests
 on:
-    pull_request:
-        branches:
-            - main
-            - master
-            - develop
+  pull_request:
+    branches:
+      - master
+      - develop
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
-            
-            - name: Set up Node.js
-              uses: actions/setup-node@v3
-              with:
-                    node-version: 18
-            
-            - name: Install dependencies
-              run: npm ci
+  lint: 
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-node@v4
+          with:
+            node-version: 22
+        - run: npm ci
+        - run: npm run eslint
+    
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-            - name: Start server and run Cypress tests
-              run: |
-                npx http-server ./src -p 3000 &
-                sleep 5
-                npx cypress run
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          start: npm run start
+          wait-on: 'http://localhost:3000'
+          config: "chromeWebSecurity=false,video=false,reporter=mochawesome,reporterOptions='{\"reportDir\":\"cypress/reports\",\"overwrite\":false,\"html\":true,\"json\":true}'"
+
+      - name: Run Lighthouse Tests
+        if: always()  
+        run: |
+          npm run lighthouse
+
+      - name: Combine reports
+        if: always() 
+        run: |
+          npx mochawesome-merge "cypress/reports/*.json" --output cypress/reports/final-report.json
+      
+      - name: Merge Mochawesome reports
+        if: always() 
+        run: |
+          npx marge cypress/reports/final-report.json -f final-report -o cypress/reports --inline 
+
+      - name: Upload Cypress report
+        if: always() 
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-report
+          path: cypress/reports/final-report.html
+          retention-days: 7
+      
+      - name: Upload Lighthouse report
+        if: always() 
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: cypress/reports/lh-report.html
+          retention-days: 7
+
+      - name: Clean reports even if earlier steps failed
+        run: |
+          rm -rf cypress/reports/* || true
+        if: always()  

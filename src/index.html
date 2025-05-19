@@ -6,10 +6,11 @@
     <title>Counter App</title>
 </head>
 <body>
+    <main role="main" aria-label="Counter Application">
     <h1>Counter: <span id="counter">0</span></h1>
-    <button id="increment-btn">Increment</button>
-    <button id="decrement-btn">Decrement</button>
-
+    <button id="increment-btn" aria-label="Increment Counter">Increment</button>
+    <button id="decrement-btn" aria-label="Decrement Counter">Decrement</button>
+</main>
     <script>
         const counterElement = document.getElementById('counter');
         const buttonUp = document.getElementById('increment-btn');
@@ -23,11 +24,8 @@
 
         buttonDown.addEventListener('click', () => {
             let count = parseInt(counterElement.textContent, 10);
-            if(count > 0) {
+            if (count > 0) {
                 counterElement.textContent = count - 1;
-                console.log('After decrement:', count - 1);
-            } else {
-                console.log('Count is 0 or less, no decrement');
             }
         });
 
