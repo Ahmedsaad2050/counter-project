@@ -5,6 +5,7 @@ describe('Counter App', () => {
 // This beforeEach function will visit baseUrl before each test case in the describe block.
     beforeEach(() => {
         cy.visit('/');
+        cy.wait(1000);
     });
     
     it('TC1 - A user can increment the counter', () => {

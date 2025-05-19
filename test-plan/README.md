@@ -32,6 +32,9 @@ The additiona non-functional checks will be added also.
   - Check buttons have visible text or aria-label
 
 - **Performance Tests**  
+  - Verify Lighthouse
   - Verify immediate response to clicks
   - Verify rapid clicking.
 
+- **ESLint checks**
+  - Verify any specified code errors or warnings
