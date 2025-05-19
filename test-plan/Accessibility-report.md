@@ -1,7 +1,11 @@
 # Accessibility Report – Counter App
 
 ## Summary
-Automated checks via `cypress-axe` indicate **no critical violations** on page load.
+- Automated checks via `cypress-axe` indicate **no critical violations** on page load.
+- The following violations were caught and reported:
+`1-landmark-one-main: Ensure the document has a main landmark on html`
+`2-region: Ensure all page content is contained by landmarks on h1`
+
 
 ### Key Accessibility Features
 - Buttons are keyboard focusable

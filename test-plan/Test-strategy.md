@@ -32,3 +32,9 @@ Ensure the counter app is functionally correct, accessible, and performant using
 ## Risks & Assumptions
 - UI markup changes (e.g. missing IDs/labels) may break tests
 - Performance numbers may vary in CI due to headless.
+- Tests should be updated as UI evolves
+
+## Notes:
+- Performance goals include keeping UI response under 100ms for smooth user experience.
+- Test results will be reported in GitHub Actions with notifications for failures to keep the team informed.
+- Regression tests will run on every pull request to catch issues early.

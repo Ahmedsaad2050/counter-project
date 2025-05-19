@@ -44,6 +44,8 @@ Add a guard condition in the decrement handler.
 ### ID: A11y-1
 ### Description:
 Initial accessibility audits using **cypress-axe** showed the app has multiple **a11y** violations, These were not blocking functionality but may affect users relying on assistive technologies.
+The reported violations are: `1-landmark-one-main: Ensure the document has a main landmark on html`
+`2-region: Ensure all page content is contained by landmarks on h1`
 
 ### Severity: Low
 
