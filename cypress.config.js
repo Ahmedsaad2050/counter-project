@@ -1,20 +1,19 @@
-module.exports = {
+import { defineConfig } from 'cypress'
+import fs from 'fs'; 
+export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
     specPattern: "cypress/**/*.cy.{js,jsx,ts,tsx}",
-    // Minimal reporter addition (safe for Lighthouse)
     reporter: 'mochawesome',
     reporterOptions: {
       reportDir: 'cypress/reports',
       overwrite: false,
       json: true,
-      quiet: true // ← Critical: prevents stdout conflicts
+      quiet: true
     },
-    
     setupNodeEvents(on, config) {
-      // 1. Keep your existing Chrome launch args (DON'T TOUCH)
       on('before:browser:launch', (browser, launchOptions) => {
-        if (browser.name === 'chrome' && browser.isCanary) {
+        if (browser.name === 'chrome') {
           launchOptions.args.push(
             "--remote-debugging-port=9222",
             "--disable-gpu",
@@ -25,14 +24,11 @@ module.exports = {
         return launchOptions;
       });
 
-      // 2. Add report cleanup (optional but recommended)
       on('before:run', () => {
-        require('fs').rmSync('cypress/reports', { recursive: true, force: true });
+        if (fs.existsSync('cypress/reports')) {
+          fs.rmSync('cypress/reports', { recursive: true, force: true })
+        }
       });
-
-
-
-      return config;
     }
   }
-};
+})
