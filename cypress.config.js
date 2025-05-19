@@ -13,7 +13,7 @@ export default defineConfig({
     },
     setupNodeEvents(on, config) {
       on('before:browser:launch', (browser, launchOptions) => {
-        if (browser.name === 'chrome') {
+        if (browser.name === 'chrome' && browser.isCanary) {
           launchOptions.args.push(
             "--remote-debugging-port=9222",
             "--disable-gpu",
