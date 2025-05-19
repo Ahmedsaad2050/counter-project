@@ -12,13 +12,22 @@ describe('Counter App Accessibility Checks', () => {
 // This TC checks if the app has no detectable a11y violations on load.
   it('TC1 - App has no detectable a11y violations on load', () => {
     cy.checkA11y(null, null, (violations) => {
-          if (violations.length > 0) {
-            cy.task('log', `${violations.length} accessibility violation(s) found`);
-            violations.forEach((v) => {
-              cy.task('log', `${v.id}: ${v.description}`);
-            });
-          }
+      if (violations.length > 0) {
+        cy.log(`${violations.length} accessibility violation(s) found:`);
+        const violationMessages = violations.map((v) => {
+          const selector = v.nodes.map((n) => n.target).join(', ');
+          const message = `${v.id}: ${v.description} on ${selector}`;
+          cy.log(message);
+          return message;
         });
+        // Delay assertion so logs appear in report
+        cy.wrap(null).then(() => {
+          throw new Error(`Accessibility violations:\n--${violationMessages.join('\n--')}`);
+        });
+      } else {
+        cy.log('No accessibility violations found');
+      }
+    }, { skipFailures: true }); 
   });
 // This TC checks if the app buttons are keyboard focusable.
   it('TC2 - App buttons are keyboard focusable', () => {
