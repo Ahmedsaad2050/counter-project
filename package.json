@@ -21,6 +21,6 @@
     "cy:run": "npx cypress run",
     "test": "npx start-server-and-test start http://localhost:3000 cy:run",
     "lighthouse": "npx lighthouse http://localhost:3000 --output html --output-path=cypress/reports/lh-report.html --chrome-flags='--headless=new --no-sandbox' --no-enable-error-reporting",
-    "eslint": "npx eslint cypress/**"
+    "eslint": "npx eslint cypress/**/*.js"
   }
 }
