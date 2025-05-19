@@ -25,8 +25,14 @@ export default defineConfig({
       });
 
       on('before:run', () => {
-        if (fs.existsSync('cypress/reports')) {
-          fs.rmSync('cypress/reports', { recursive: true, force: true })
+        if (fs.existsSync('cypress/reports')) {                          // Check if the directory exists
+          fs.rmSync('cypress/reports', { recursive: true, force: true }) // Remove existing reports
+        }
+          fs.mkdirSync('cypress/reports', { recursive: true }); // Ensure directory exists
+      });
+      on('after:run', (results) => {
+        if (results.totalFailed > 0) {
+          console.log('Tests failed - generating reports');
         }
       });
     }
