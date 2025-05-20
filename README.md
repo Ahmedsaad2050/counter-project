@@ -26,25 +26,28 @@ The original application had logic and accessibility issues. As part of the chal
 - Run the following command in the local project terminal:
 `git clone https://github.com/ahmedsaad2050/counter-project.git`
 
-### 2. Start the server locally:
+### 2. Run npm install
+- `npm install`
+
+### 3. Start the server locally:
 - `npm start`
 
-### 3. Run Cypress tests:
+### 4. Run Cypress tests:
 - `npm run cy:run`
 
-### 4. Start the server and run Cypress tests in one command:
+### 5. Start the server and run Cypress tests in one command:
 - `npm run test`  ==> This will start the server and run Cypress tests automatically.
 
-### 5. Run Lighthouse performance audit:
+### 6. Run Lighthouse performance audit:
 - `npm run lighthouse`
 
-### 6. Run ESLint on the code:
+### 7. Run ESLint on the code:
 - `npm run eslint`
 
-### 7. Combine Mochawesome Reports:
+### 8. Combine Mochawesome Reports:
 - `npx mochawesome-merge "cypress/reports/*.json" --output cypress/reports/final-report.json`
-- `npx marge cypress/reports/final-report.json -f final-report -o cypress/reports --inline `
-### 8. View the generated report or the lighthouse-report:
+- `npx marge cypress/reports/final-report.json -f final-report -o cypress/reports --inline`
+### 9. View the generated report or the lighthouse-report:
 - `cypress/reports/final-report.html`
 - `cypress/reports/lh-report.html`
 
@@ -52,6 +55,10 @@ The original application had logic and accessibility issues. As part of the chal
 - GitHub Actions workflow runs on pull requests to develop and master
 - Cypress and Lighthouse reports are uploaded as downloadable artifacts
 - Mochawesome merges all Cypress test results into a single HTML report
+- Here's a screenshot of the lightouse-report and the final report (E2E, Accessibility & Performance checks):
+![Final Report screenshot](README/Final report.png)
+![1st Lighthouse Report screenshot](README/Lightouse report1.png)
+![2nd Lightouse Report screenshot](README/Lighthouse report2.png)
 
 ## Project Structure
 - `cypress/e2e/` – Functional tests
