@@ -2,9 +2,7 @@ import CounterPage from "../pages/CounterPage";
 
 describe('Counter App Performance Checks', () => {
     const counterPage = new CounterPage();
-    beforeEach(() => {
-    cy.visit('/');
-  });
+    
 
 // This TC checks if the app updates the counter within 100ms range on click.
     it('TC1 - App should update counter immediately on click', () => {
@@ -25,5 +23,4 @@ describe('Counter App Performance Checks', () => {
     }
     cy.get('#counter').should('contain.text', '20');
     });
-
 });

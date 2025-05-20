@@ -1,16 +1,18 @@
 import 'cypress-axe';
 import CounterPage from "../pages/CounterPage"; 
 
+// Accessibility checks using axe-core & a11y.
 describe('Counter App Accessibility Checks', () => {
   const counterPage = new CounterPage();
   beforeEach(() => {
     cy.visit('/');
-// inject axe-core for a11y testing
+// inject axe-core for a11y testing.
     cy.injectAxe();
   });
 
 // This TC checks if the app has no detectable a11y violations on load.
   it('TC1 - App has no detectable a11y violations on load', () => {
+// Retrieve the violations and log them if they exit.
     cy.checkA11y(null, null, (violations) => {
       if (violations.length > 0) {
         cy.log(`${violations.length} accessibility violation(s) found:`);
@@ -20,7 +22,7 @@ describe('Counter App Accessibility Checks', () => {
           cy.log(message);
           return message;
         });
-        // Delay assertion so logs appear in report
+// Delay assertion so logs appear in report.
         cy.wrap(null).then(() => {
           throw new Error(`Accessibility violations:\n--${violationMessages.join('\n--')}`);
         });
@@ -29,6 +31,7 @@ describe('Counter App Accessibility Checks', () => {
       }
     }, { skipFailures: true }); 
   });
+
 // This TC checks if the app buttons are keyboard focusable.
   it('TC2 - App buttons are keyboard focusable', () => {
     counterPage.incrementButton.focus().should('have.focus');
@@ -37,12 +40,9 @@ describe('Counter App Accessibility Checks', () => {
 
 // This TC checks if the app buttons have accessible names.
   it('TC3 - App buttons have accessible names', () => {
-    counterPage.incrementButton
-      .should('have.attr', 'aria-label')
+    counterPage.incrementButton.should('have.attr', 'aria-label')
       .and('match', /increment|increase/i);
-
-    counterPage.decrementButton
-      .should('have.attr', 'aria-label')
+    counterPage.decrementButton.should('have.attr', 'aria-label')
       .and('match', /decrement|decrease/i);
   });
   
