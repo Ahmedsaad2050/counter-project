@@ -1,6 +1,7 @@
 # Counter App QA Project
 [![CI Status](https://github.com/ahmedsaad2050/counter-project/actions/workflows/verify_pr.yml/badge.svg)](https://github.com/ahmedsaad2050/counter-project/actions/workflows/verify_pr.yml)
 
+
 This project is a QA-focused test framework for a simple counter app for the QA task. It's built using Cypress for E2E testing and includes accessibility and performance auditing using Lighthouse,
 Reports are auto-generated and uploaded as GitHub Action artifacts.
 The original application had logic and accessibility issues. As part of the challenge, they were logged and minimal changes were applied only when necessary to support automation.
