@@ -57,7 +57,7 @@ The original application had logic and accessibility issues. As part of the chal
 - Mochawesome merges all Cypress test results into a single HTML report
 - Here's a screenshot of the lightouse-report and the final report (E2E, Accessibility & Performance checks):
 ![Final Report screenshot](README/final-report.png)
-![1st Lighthouse Report screenshot](README/lighthouse-report1.png)
+![1st Lighthouse Report screenshot](README/lightouse-report1.png)
 ![2nd Lightouse Report screenshot](README/lighthouse-report2.png)
 
 ## Project Structure
