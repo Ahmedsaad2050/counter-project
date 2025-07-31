@@ -1,11 +1,14 @@
 {
-  "type": "module",
   "name": "counter-project",
   "version": "1.0.0",
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^22.1.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "2.2.5",
     "axe-core": "^4.10.3",
-    "cypress": "^14.3.3",
+    "cypress": "^14.4.1",
     "cypress-axe": "^1.6.0",
+    "cypress-tags": "^1.2.2",
+    "esbuild": "^0.25.5",
     "eslint": "^8.57.0",
     "eslint-plugin-cypress": "^3.2.0",
     "http-server": "^14.1.1",
