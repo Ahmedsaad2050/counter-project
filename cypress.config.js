@@ -7,7 +7,7 @@ const createEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esb
 module.exports =  defineConfig({
   e2e: {
 // Setup the base URL for the tests.
-    baseUrl: 'http://localhost:3000/src',
+    baseUrl: 'http://localhost:3000',
 // Setup the spec pattern for the tests.
     specPattern: ["cypress/**/*.cy.{js,jsx,ts,tsx}", "cypress/e2e/**/*.feature"],
 // Setup the report and the reporter options.
