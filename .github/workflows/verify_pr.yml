@@ -42,7 +42,9 @@ jobs:
           browser: chrome
           start: npm run start
           wait-on: 'http://localhost:3000'
-          config: "chromeWebSecurity=false,video=false,reporter=mochawesome,reporterOptions='{\"reportDir\":\"cypress/reports\",\"overwrite\":false,\"html\":true,\"json\":true}'"
+          config: >
+           "chromeWebSecurity=false,video=false,reporter=mochawesome,reporterOptions=
+           '{\"reportDir\":\"cypress/reports\",\"overwrite\":false,\"html\":true,\"json\":true}'"
 
       - name: Run Lighthouse Tests
         if: always()  
@@ -75,7 +77,31 @@ jobs:
           path: cypress/reports/lh-report.html
           retention-days: 7
 
+      - name: Send Email with Reports
+
+        if: always()
+
+        uses: dawidd6/action-send-mail@v3
+
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          secure: true
+          subject: "Cypress Report - Run #${{ github.run_number }}"
+          to: ${{ secrets.TO_EMAIL }}
+          from: Cypress QA Bot <${{ secrets.SMTP_USER }}>
+          body: |
+            Reports from the latest GitHub run:
+            • Cypress Report: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            • Lighthouse Report: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            You can download the full artifacts from the "Artifacts" section of the workflow run.
+          attachments: |
+            cypress/reports/final-report.html
+            cypress/reports/lh-report.html
+
       - name: Clean reports even if earlier steps failed
         run: |
           rm -rf cypress/reports/* || true
-        if: always()  
+        if: always()
