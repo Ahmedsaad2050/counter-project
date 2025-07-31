@@ -1,11 +1,15 @@
-import { defineConfig } from 'cypress'
-import fs from 'fs'; 
-export default defineConfig({
+const { defineConfig } = require("cypress");
+const fs = require("fs");
+const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
+const addCucumberPreprocessorPlugin = require("@badeball/cypress-cucumber-preprocessor").addCucumberPreprocessorPlugin;
+const createEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esbuild").createEsbuildPlugin;
+
+module.exports =  defineConfig({
   e2e: {
 // Setup the base URL for the tests.
     baseUrl: 'http://localhost:3000',
 // Setup the spec pattern for the tests.
-    specPattern: "cypress/**/*.cy.{js,jsx,ts,tsx}",
+    specPattern: ["cypress/**/*.cy.{js,jsx,ts,tsx}", "cypress/e2e/**/*.feature"],
 // Setup the report and the reporter options.
     reporter: 'mochawesome',
     reporterOptions: {
@@ -14,7 +18,14 @@ export default defineConfig({
       json: true,
       quiet: true
     },
-    setupNodeEvents(on, config) {
+    async setupNodeEvents(on, config) {
+      await addCucumberPreprocessorPlugin(on, config);
+      on(
+        "file:preprocessor",
+        createBundler({
+          plugins: [createEsbuildPlugin(config)],
+        })
+      );
 // Setup the before browser launch event to add custom arguments for Chrome Canary.
       on('before:browser:launch', (browser, launchOptions) => {
         if (browser.name === 'chrome' && browser.isCanary) {
@@ -47,6 +58,7 @@ export default defineConfig({
           console.log('Tests failed - generating reports');
         }
       });
-    }
-  }
-})
+      return config;
+    },
+  },
+});
